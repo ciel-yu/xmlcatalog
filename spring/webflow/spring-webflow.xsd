@@ -2,8 +2,7 @@
 <xsd:schema xmlns="http://www.springframework.org/schema/webflow"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.springframework.org/schema/webflow"
-	elementFormDefault="qualified"
-	version="2.4">
+	elementFormDefault="qualified">
 
 	<xsd:annotation>
 		<xsd:documentation>

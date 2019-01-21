@@ -18,7 +18,7 @@
 	<xsd:element name="mongo" type="mongoType">
 		<xsd:annotation>
 			<xsd:documentation source="org.springframework.data.mongodb.core.MongoFactoryBean"><![CDATA[
-Defines a Mongo instance used for accessing MongoDB'.
+Deprecated since 1.7 - use mongo-client instead. Defines a Mongo instance used for accessing MongoDB.
 			]]></xsd:documentation>
 			<xsd:appinfo>
 				<tool:annotation>
@@ -31,7 +31,7 @@ Defines a Mongo instance used for accessing MongoDB'.
 	<xsd:element name="mongo-client" type="mongoClientType">
 	  <xsd:annotation>
 		<xsd:documentation source="org.springframework.data.mongodb.core.MongoClientFactoryBean"><![CDATA[
-Defines a MongoClient instance used for accessing MongoDB'.
+Defines a MongoClient instance used for accessing MongoDB.
 			]]></xsd:documentation>
 			<xsd:appinfo>
 				<tool:annotation>
@@ -72,14 +72,14 @@ The name of the database to connect to. Default is 'db'.
 			<xsd:attribute name="authentication-dbname" type="xsd:string" use="optional">
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
-The name of the authentication database to connect to. Default is 'db'.
+Deprecated since 1.7 - Please use MongoClient internal authentication. The name of the authentication database to connect to. Default is 'db'.
 							]]></xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>
 			<xsd:attribute name="port" type="xsd:string" use="optional">
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
-The port to connect to MongoDB server.  Default is 27017
+The port to connect to MongoDB server. Default is 27017
 							]]></xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>
@@ -93,14 +93,14 @@ The host to connect to a MongoDB server.  Default is localhost
 			<xsd:attribute name="username" type="xsd:string" use="optional">
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
-The username to use when connecting to a MongoDB server.
+Deprecated since 1.7 - Please use MongoClient internal authentication. The username to use when connecting to a MongoDB server.
 							]]></xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>
 			<xsd:attribute name="password" type="xsd:string" use="optional">
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
-The password to use when connecting to a MongoDB server.
+Deprecated since 1.7 - Please use MongoClient internal authentication. The password to use when connecting to a MongoDB server.
 							]]></xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>
@@ -382,6 +382,11 @@ The name of the Mongo object that determines what server to monitor. (by default
 	</xsd:attributeGroup>
 	-->
 	<xsd:complexType name="mongoType">
+		<xsd:annotation>
+	    	<xsd:documentation><![CDATA[
+Deprecated since 1.7.    	
+	    	]]></xsd:documentation>
+	    </xsd:annotation>
 		<xsd:sequence minOccurs="0" maxOccurs="1">
 			<xsd:element name="options" type="optionsType">
 				<xsd:annotation>
@@ -439,6 +444,11 @@ The comma delimited list of host:port entries to use for replica set/pairs.
 	</xsd:complexType>
 
 	<xsd:complexType name="optionsType">
+		<xsd:annotation>
+	    	<xsd:documentation><![CDATA[
+Deprecated since 1.7.    	
+	    	]]></xsd:documentation>
+	    </xsd:annotation>
 		<xsd:attribute name="connections-per-host" type="xsd:string">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
@@ -542,6 +552,11 @@ The SSLSocketFactory to use for the SSL connection. If none is configured here, 
 	</xsd:complexType>
 	
 	<xsd:complexType name="mongoClientType">
+		<xsd:annotation>
+	    	<xsd:documentation><![CDATA[
+Configuration options for 'MongoClient' - @since 1.7	    	
+	    	]]></xsd:documentation>
+	    </xsd:annotation>
 		<xsd:sequence minOccurs="0" maxOccurs="1">
 			<xsd:element name="client-options" type="clientOptionsType">
 				<xsd:annotation>
@@ -586,17 +601,22 @@ The comma delimited list of host:port entries to use for replica set/pairs.
 		<xsd:attribute name="credentials" type="xsd:string" use="optional">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
-The comma delimited list of username:password@database entries to use for authentication. Appending ?uri.authMechanism allows to specify the authentication challenge mechanism.
+The comma delimited list of username:password@database entries to use for authentication. Appending ?uri.authMechanism allows to specify the authentication challenge mechanism. If the credential you're trying to pass contains a comma itself, quote it with single quotes: '…'.
 							]]></xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
 	
 	<xsd:complexType name="clientOptionsType">
+	    <xsd:annotation>
+	    	<xsd:documentation><![CDATA[
+Configuration options for 'MongoClientOptions' - @since 1.7	    	
+	    	]]></xsd:documentation>
+	    </xsd:annotation>
 		<xsd:attribute name="description" type="xsd:string">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
-The MongoClient description.	
+The MongoClient description.
 				]]></xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
