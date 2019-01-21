@@ -1,47 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <xsd:schema xmlns="http://www.springframework.org/schema/cql"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:tool="http://www.springframework.org/schema/tool"
-	targetNamespace="http://www.springframework.org/schema/cql"
-	elementFormDefault="qualified" attributeFormDefault="unqualified">
+			xmlns:tool="http://www.springframework.org/schema/tool"
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="http://www.springframework.org/schema/cql"
+			elementFormDefault="qualified" attributeFormDefault="unqualified">
 
 	<xsd:import namespace="http://www.springframework.org/schema/tool"
-		schemaLocation="http://www.springframework.org/schema/tool/spring-tool.xsd" />
+				schemaLocation="http://www.springframework.org/schema/tool/spring-tool.xsd"/>
 
 	<xsd:annotation>
 		<xsd:documentation><![CDATA[
 Defines the configuration elements for Spring Cassandra support.
 		]]></xsd:documentation>
 	</xsd:annotation>
-
-	<xsd:element name="session" type="sessionType">
-		<xsd:annotation>
-			<xsd:documentation
-				source="org.springframework.cassandra.config.xml.CassandraSessionFactoryBean"><![CDATA[
-Defines a Cassandra session.
-			]]></xsd:documentation>
-			<xsd:appinfo>
-				<tool:annotation>
-					<tool:exports type="com.datastax.driver.core.Session" />
-				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-	</xsd:element>
-
-	<xsd:element name="template" type="templateType">
-		<xsd:annotation>
-			<xsd:documentation
-				source="org.springframework.cassandra.config.xml.CassandraTemplateFactoryBean"><![CDATA[
-Defines a CqlTemplate.
-			]]></xsd:documentation>
-			<xsd:appinfo>
-				<tool:annotation>
-					<tool:exports type="org.springframework.cassandra.CqlTemplate" />
-				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-	</xsd:element>
 
 	<xsd:element name="cluster" type="clusterType">
 		<xsd:annotation>
@@ -57,10 +28,49 @@ Defines a Cassandra cluster.
 		</xsd:annotation>
 	</xsd:element>
 
+	<xsd:element name="session" type="sessionType">
+		<xsd:annotation>
+			<xsd:documentation
+					source="org.springframework.cassandra.config.xml.CassandraSessionFactoryBean"><![CDATA[
+Defines a Cassandra session.
+			]]></xsd:documentation>
+			<xsd:appinfo>
+				<tool:annotation>
+					<tool:exports type="com.datastax.driver.core.Session"/>
+				</tool:annotation>
+			</xsd:appinfo>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="template" type="templateType">
+		<xsd:annotation>
+			<xsd:documentation
+					source="org.springframework.cassandra.config.xml.CassandraTemplateFactoryBean"><![CDATA[
+Defines a CqlTemplate.
+			]]></xsd:documentation>
+			<xsd:appinfo>
+				<tool:annotation>
+					<tool:exports type="org.springframework.cassandra.CqlTemplate"/>
+				</tool:annotation>
+			</xsd:appinfo>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:simpleType name="clusterRef" final="union">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<tool:annotation kind="ref">
+					<tool:assignable-to type="com.datastax.driver.core.Cluster"/>
+				</tool:annotation>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string" />
+	</xsd:simpleType>
+
 	<xsd:complexType name="clusterType">
 		<xsd:sequence>
 			<xsd:element name="local-pooling-options" type="poolingOptionsType"
-				maxOccurs="1" minOccurs="0">
+						 maxOccurs="1" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
 Local pooling options.
@@ -68,7 +78,7 @@ Local pooling options.
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="remote-pooling-options" type="poolingOptionsType"
-				minOccurs="0" maxOccurs="1">
+						 minOccurs="0" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
 Remote pooling options.
@@ -76,7 +86,7 @@ Remote pooling options.
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="socket-options" type="socketOptionsType"
-				maxOccurs="1" minOccurs="0">
+						 maxOccurs="1" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
 Socket options.
@@ -84,7 +94,7 @@ Socket options.
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="keyspace" type="keyspaceType"
-				minOccurs="0" maxOccurs="unbounded">
+						 minOccurs="0" maxOccurs="unbounded">
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
 Provides the ability to define a keyspace.
@@ -92,7 +102,7 @@ Provides the ability to define a keyspace.
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="startup-cql" type="xsd:string"
-				minOccurs="0" maxOccurs="unbounded">
+						 minOccurs="0" maxOccurs="unbounded">
 				<!-- TODO: cql could come from a resource via a resource attribute... -->
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
@@ -101,7 +111,7 @@ Arbitrary CQL script to be executed against the system keyspace during bean init
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="shutdown-cql" type="xsd:string"
-				minOccurs="0" maxOccurs="unbounded">
+						 minOccurs="0" maxOccurs="unbounded">
 				<!-- TODO: cql could come from a resource via a resource attribute... -->
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
@@ -118,7 +128,7 @@ The name of the Cassandra Cluster definition; default is "cassandra-cluster".
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="contact-points" type="xsd:string"
-			use="optional" default="localhost">
+					   use="optional" default="localhost">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
 The comma separated list of Cassandra servers.  Default is "localhost".
@@ -126,7 +136,7 @@ The comma separated list of Cassandra servers.  Default is "localhost".
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="port" type="xsd:string" use="optional"
-			default="9042">
+					   default="9042">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
 The native CQL port to connect to.  Default is 9042.
@@ -134,7 +144,7 @@ The native CQL port to connect to.  Default is 9042.
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="compression" default="NONE" use="optional"
-			type="xsd:string">
+					   type="xsd:string">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
 The protocol compression option. Default is "NONE".
@@ -157,7 +167,7 @@ When Authentication is enabled, the password to use when connecting to the Clust
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="metrics-enabled" type="xsd:string"
-			default="true">
+					   default="true">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
 Determine whether or not to collect metrics.  Defaults to true.
@@ -165,15 +175,23 @@ Determine whether or not to collect metrics.  Defaults to true.
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="jmx-reporting-enabled" type="xsd:string"
-			default="true">
+					   default="true">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
 Determine whether or not to enable JMX Reporting.  Defaults to true.
 				]]></xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
+		<xsd:attribute name="deferred-initialization" type="xsd:string"
+					   default="false">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[
+Determine if we defer initalizing the cluster until a connection is requested. Defaults to false.
+				]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 		<xsd:attribute name="ssl-enabled" type="xsd:string"
-			default="false">
+					   default="false">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
 Determine if SSL is used for Cassandra communication. Defaults to false.
@@ -190,11 +208,11 @@ AuthInfoProvider implementation.
 				<xsd:annotation>
 					<xsd:appinfo>
 						<tool:annotation kind="ref">
-							<tool:assignable-to type="com.datastax.driver.core.AuthInfoProvider" />
+							<tool:assignable-to type="com.datastax.driver.core.AuthInfoProvider"/>
 						</tool:annotation>
 					</xsd:appinfo>
 				</xsd:annotation>
-				<xsd:union memberTypes="xsd:string" />
+				<xsd:union memberTypes="xsd:string"/>
 			</xsd:simpleType>
 		</xsd:attribute>
 		<xsd:attribute name="load-balancing-policy-ref" use="optional">
@@ -208,11 +226,11 @@ LoadBalancingPolicy implementation.
 					<xsd:appinfo>
 						<tool:annotation kind="ref">
 							<tool:assignable-to
-								type="com.datastax.driver.core.policies.LoadBalancingPolicy" />
+									type="com.datastax.driver.core.policies.LoadBalancingPolicy"/>
 						</tool:annotation>
 					</xsd:appinfo>
 				</xsd:annotation>
-				<xsd:union memberTypes="xsd:string" />
+				<xsd:union memberTypes="xsd:string"/>
 			</xsd:simpleType>
 		</xsd:attribute>
 		<xsd:attribute name="reconnection-policy-ref" use="optional">
@@ -226,11 +244,11 @@ ReconnectionPolicy implementation.
 					<xsd:appinfo>
 						<tool:annotation kind="ref">
 							<tool:assignable-to
-								type="com.datastax.driver.core.policies.ReconnectionPolicy" />
+									type="com.datastax.driver.core.policies.ReconnectionPolicy"/>
 						</tool:annotation>
 					</xsd:appinfo>
 				</xsd:annotation>
-				<xsd:union memberTypes="xsd:string" />
+				<xsd:union memberTypes="xsd:string"/>
 			</xsd:simpleType>
 		</xsd:attribute>
 		<xsd:attribute name="retry-policy-ref" use="optional">
@@ -244,11 +262,11 @@ RetryPolicy implementation.
 					<xsd:appinfo>
 						<tool:annotation kind="ref">
 							<tool:assignable-to
-								type="com.datastax.driver.core.policies.RetryPolicy" />
+									type="com.datastax.driver.core.policies.RetryPolicy"/>
 						</tool:annotation>
 					</xsd:appinfo>
 				</xsd:annotation>
-				<xsd:union memberTypes="xsd:string" />
+				<xsd:union memberTypes="xsd:string"/>
 			</xsd:simpleType>
 		</xsd:attribute>
 		<xsd:attribute name="ssl-options-ref" use="optional">
@@ -261,11 +279,11 @@ Custom SSL Options. sslEnabled must be true for sslOptions to be used.
 				<xsd:annotation>
 					<xsd:appinfo>
 						<tool:annotation kind="ref">
-							<tool:assignable-to type="com.datastax.driver.core.SSLOptions" />
+							<tool:assignable-to type="com.datastax.driver.core.SSLOptions"/>
 						</tool:annotation>
 					</xsd:appinfo>
 				</xsd:annotation>
-				<xsd:union memberTypes="xsd:string" />
+				<xsd:union memberTypes="xsd:string"/>
 			</xsd:simpleType>
 		</xsd:attribute>
 		<xsd:attribute name="host-state-listener-ref" use="optional">
@@ -278,11 +296,11 @@ Custom Host State Listener for the Cassandra Cluster.
 				<xsd:annotation>
 					<xsd:appinfo>
 						<tool:annotation kind="ref">
-							<tool:assignable-to type="com.datastax.driver.core.Host.StateListener" />
+							<tool:assignable-to type="com.datastax.driver.core.Host.StateListener"/>
 						</tool:annotation>
 					</xsd:appinfo>
 				</xsd:annotation>
-				<xsd:union memberTypes="xsd:string" />
+				<xsd:union memberTypes="xsd:string"/>
 			</xsd:simpleType>
 		</xsd:attribute>
 		<xsd:attribute name="latency-tracker-ref" use="optional">
@@ -295,34 +313,23 @@ Custom Latency Tracker for the Cassandra Cluster.
 				<xsd:annotation>
 					<xsd:appinfo>
 						<tool:annotation kind="ref">
-							<tool:assignable-to type="com.datastax.driver.core.LatencyTracker" />
+							<tool:assignable-to type="com.datastax.driver.core.LatencyTracker"/>
 						</tool:annotation>
 					</xsd:appinfo>
 				</xsd:annotation>
-				<xsd:union memberTypes="xsd:string" />
+				<xsd:union memberTypes="xsd:string"/>
 			</xsd:simpleType>
 		</xsd:attribute>
 	</xsd:complexType>
-	<xsd:simpleType name="clusterRef" final="union">
-		<xsd:annotation>
-			<xsd:appinfo>
-				<tool:annotation kind="ref">
-					<tool:assignable-to type="com.datastax.driver.core.Cluster" />
-				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string" />
-	</xsd:simpleType>
-
 	<xsd:simpleType name="sessionRef" final="union">
 		<xsd:annotation>
 			<xsd:appinfo>
 				<tool:annotation kind="ref">
-					<tool:assignable-to type="com.datastax.driver.core.Session" />
+					<tool:assignable-to type="com.datastax.driver.core.Session"/>
 				</tool:annotation>
 			</xsd:appinfo>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string" />
+		<xsd:union memberTypes="xsd:string"/>
 	</xsd:simpleType>
 
 	<xsd:complexType name="poolingOptionsType">
@@ -418,7 +425,7 @@ Sets the SO_SNDBUF socket option.
 	<xsd:complexType name="sessionType">
 		<xsd:sequence>
 			<xsd:element name="startup-cql" type="xsd:string"
-				minOccurs="0" maxOccurs="unbounded">
+						 minOccurs="0" maxOccurs="unbounded">
 				<!-- TODO: cql could come from a resource via a resource attribute... -->
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
@@ -427,7 +434,7 @@ Arbitrary CQL script to be executed against the session's keyspace during bean i
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="shutdown-cql" type="xsd:string"
-				minOccurs="0" maxOccurs="unbounded">
+						 minOccurs="0" maxOccurs="unbounded">
 				<!-- TODO: cql could come from a resource via a resource attribute... -->
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
@@ -452,7 +459,7 @@ The reference to a Cassandra cluster; default is "cassandraCluster".
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="keyspace-name" type="xsd:string"
-			use="required">
+					   use="required">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
 The name of a Cassandra Keyspace.  No default; for the system keyspace, use the empty string.
@@ -486,7 +493,7 @@ Provides the ability to define keyspaces.
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="replication" type="replicationType"
-				minOccurs="0" maxOccurs="1">
+						 minOccurs="0" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
 Provides the ability to configure the keyspace's replication settings.
@@ -509,7 +516,7 @@ The keyspace action to take at startup and possibly shutdown.
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="durable-writes" type="xsd:string"
-			use="optional" default="false">
+					   use="optional" default="false">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
 Whether or not the keyspace supports durable writes.
@@ -526,7 +533,7 @@ Provides the ability to configure the keyspace's replication settings.
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="data-center" type="datacenterType"
-				minOccurs="0" maxOccurs="unbounded">
+						 minOccurs="0" maxOccurs="unbounded">
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
 Provides the ability to specify replication factors by data center.
@@ -535,7 +542,7 @@ Provides the ability to specify replication factors by data center.
 			</xsd:element>
 		</xsd:sequence>
 		<xsd:attribute name="class" type="xsd:string" use="optional"
-			default="SIMPLE_STRATEGY">
+					   default="SIMPLE_STRATEGY">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
 The name of the replication class; default is "SIMPLE_STRATEGY".
@@ -543,7 +550,7 @@ The name of the replication class; default is "SIMPLE_STRATEGY".
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="replication-factor" type="xsd:string"
-			use="optional" default="1">
+					   use="optional" default="1">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
 The replication factor; default is 1.
@@ -565,7 +572,7 @@ The name of the data center.
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="replication-factor" type="xsd:string"
-			use="required">
+					   use="required">
 			<xsd:annotation>
 				<xsd:documentation><![CDATA[
 The replication factor for the data center.
